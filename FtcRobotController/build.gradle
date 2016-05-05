@@ -12,6 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19
+        signingConfig signingConfigs.debug
     }
     compileSdkVersion 19
     buildToolsVersion '21.1.2'
@@ -42,7 +43,6 @@ allprojects {
 }
 
 dependencies {
-    compile files('libs/android-support-v4.jar')
     compile(name: 'RobotCore-release', ext: 'aar')
     compile(name: 'Hardware-release', ext: 'aar')
     compile(name: 'FtcCommon-release', ext: 'aar')
