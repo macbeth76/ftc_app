@@ -62,7 +62,7 @@ import com.qualcomm.ftccommon.FtcRobotControllerService.FtcRobotControllerBinder
 import com.qualcomm.ftccommon.LaunchActivityConstantsList;
 import com.qualcomm.ftccommon.Restarter;
 import com.qualcomm.ftccommon.UpdateUI;
-import com.qualcomm.ftcrobotcontroller.opmodes.aburger.FtcOpModeRegister;
+import com.qualcomm.ftcrobotcontroller.opmodes.FtcOpModeRegister;
 import com.qualcomm.hardware.HardwareFactory;
 import com.qualcomm.robotcore.hardware.configuration.Utility;
 import com.qualcomm.robotcore.util.Dimmer;
@@ -78,20 +78,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class FtcRobotControllerActivity extends Activity {
 
+  public static final String CONFIGURE_FILENAME = "CONFIGURE_FILENAME";
   private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
   private static final boolean USE_DEVICE_EMULATION = false;
   private static final int NUM_GAMEPADS = 2;
-
-  public static final String CONFIGURE_FILENAME = "CONFIGURE_FILENAME";
-
   protected WifiManager.WifiLock wifiLock;
   protected SharedPreferences preferences;
 
   protected UpdateUI.Callback callback;
   protected Context context;
-  private Utility utility;
   protected ImageButton buttonMenu;
-
   protected TextView textDeviceName;
   protected TextView textWifiDirectStatus;
   protected TextView textRobotStatus;
@@ -99,24 +95,13 @@ public class FtcRobotControllerActivity extends Activity {
   protected TextView textOpMode;
   protected TextView textErrorMessage;
   protected ImmersiveMode immersion;
-
   protected UpdateUI updateUI;
   protected Dimmer dimmer;
   protected LinearLayout entireScreenLayout;
-
   protected FtcRobotControllerService controllerService;
-
   protected FtcEventLoop eventLoop;
   protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
-
-  protected class RobotRestarter implements Restarter {
-
-    public void requestRestart() {
-      requestRobotRestart();
-    }
-
-  }
-
+  private Utility utility;
   protected ServiceConnection connection = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
@@ -155,8 +140,7 @@ public class FtcRobotControllerActivity extends Activity {
           break;
         this.eventLoop.onUsbDeviceAttached(usbDevice);
       }
-    }
-    else {
+    } else {
       // Paranoia: we don't want the pending list to grow without bound when we don't
       // (yet) have an event loop
       while (receivedUsbAttachmentNotifications.size() > 100) {
@@ -200,7 +184,7 @@ public class FtcRobotControllerActivity extends Activity {
     updateUI = new UpdateUI(this, dimmer);
     updateUI.setRestarter(restarter);
     updateUI.setTextViews(textWifiDirectStatus, textRobotStatus,
-        textGamepad, textOpMode, textErrorMessage, textDeviceName);
+            textGamepad, textOpMode, textErrorMessage, textDeviceName);
     callback = updateUI.new Callback();
 
     PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -211,7 +195,9 @@ public class FtcRobotControllerActivity extends Activity {
 
     hittingMenuButtonBrightensScreen();
 
-    if (USE_DEVICE_EMULATION) { HardwareFactory.enableDeviceEmulation(); }
+    if (USE_DEVICE_EMULATION) {
+      HardwareFactory.enableDeviceEmulation();
+    }
   }
 
   @Override
@@ -261,13 +247,13 @@ public class FtcRobotControllerActivity extends Activity {
   }
 
   @Override
-  public void onWindowFocusChanged(boolean hasFocus){
+  public void onWindowFocusChanged(boolean hasFocus) {
     super.onWindowFocusChanged(hasFocus);
     // When the window loses focus (e.g., the action overflow is shown),
     // cancel any pending hide action. When the window gains focus,
     // hide the system UI.
     if (hasFocus) {
-      if (ImmersiveMode.apiOver19()){
+      if (ImmersiveMode.apiOver19()) {
         // Immersive flag only works on API 19 and above.
         immersion.hideSystemUI();
       }
@@ -275,7 +261,6 @@ public class FtcRobotControllerActivity extends Activity {
       immersion.cancelSystemUIHide();
     }
   }
-
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -423,5 +408,13 @@ public class FtcRobotControllerActivity extends Activity {
         toast.show();
       }
     });
+  }
+
+  protected class RobotRestarter implements Restarter {
+
+    public void requestRestart() {
+      requestRobotRestart();
+    }
+
   }
 }
