@@ -1,25 +1,20 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.mentor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class SimpleDriver extends LinearOpMode {
     final static double kBaseSpeed = 1;  // Higher values will cause the robot to move faster
 
     final static double kMinimumStrength = 0.08; // Higher values will cause the robot to follow closer
     final static double kMaximumStrength = 0.60; // Lower values will cause the robot to stop sooner
+    MotorContoller mc;
 
-    DcMotor leftMotor;
-    DcMotor rightMotor;
-    DcMotor leftRearMotor;
-    DcMotor rightRearMotor;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
-        leftMotor = hardwareMap.dcMotor.get("lf");
-        rightMotor = hardwareMap.dcMotor.get("rf");
-        leftRearMotor = hardwareMap.dcMotor.get("lb");
-        rightRearMotor = hardwareMap.dcMotor.get("rb");
+
+        mc = new MotorContoller(hardwareMap);
 
         goforward();
         // Wait for the start button to be pressed
@@ -60,15 +55,15 @@ public class SimpleDriver extends LinearOpMode {
                 default:
                     new Exception("Shouldn't Get Here");
             }
-            leftMotor.setPower(speed);
-            rightMotor.setPower(speed);
-            leftRearMotor.setPower(speed);
-            rightRearMotor.setPower(speed);
+            mc.getLeftMotor().setPower(speed);
+            mc.getRightMotor().setPower(speed);
+            mc.getLeftRearMotor().setPower(speed);
+            mc.getRightRearMotor().setPower(speed);
             telemetry.addData("Speed ", speed);
-            telemetry.addData("Speed Front", " Left=" + leftMotor.getPower() + " Right=" + rightMotor.getPower());
-            telemetry.addData("Speed Rear", " Left=" + leftMotor.getPower() + " Right=" + rightMotor.getPower());
-            telemetry.addData("FD:", leftMotor.getDirection() + "," + rightMotor.getDirection());
-            telemetry.addData("RD:", leftRearMotor.getDirection() + "," + rightRearMotor.getDirection());
+            telemetry.addData("Speed Front", " Left=" + mc.getLeftMotor().getPower() + " Right=" + mc.getRightMotor().getPower());
+            telemetry.addData("Speed Rear", " Left=" + mc.getLeftMotor().getPower() + " Right=" + mc.getRightMotor().getPower());
+            telemetry.addData("FD:", mc.getLeftMotor().getDirection() + "," + mc.getRightMotor().getDirection());
+            telemetry.addData("RD:", mc.getLeftRearMotor().getDirection() + "," + mc.getRightRearMotor().getDirection());
             if (i == Integer.MAX_VALUE) {
                 i = 0;
             } else {
@@ -82,33 +77,21 @@ public class SimpleDriver extends LinearOpMode {
 
     private void goforward() {
         telemetry.addData("State", "Go Forward");
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        mc.motorsForward();
     }
 
     private void gobackward() {
         telemetry.addData("State", "Go Back");
-        leftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
+        mc.motorsBackwards();
     }
 
     private void goleft() {
         telemetry.addData("State", "Go Left");
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        mc.motorsLeft();
     }
 
     private void goright() {
         telemetry.addData("State", "Go Right");
-        leftMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
+        mc.motorsRight();
     }
 }

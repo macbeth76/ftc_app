@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.mentor.MotorTest;
 import com.qualcomm.ftcrobotcontroller.opmodes.mentor.SimpleDriver;
 import com.qualcomm.ftcrobotcontroller.opmodes.mentor.SimpleDriver2;
 import com.qualcomm.ftcrobotcontroller.opmodes.mentor.SimpleDriverLeft;
@@ -65,6 +66,7 @@ public class FtcOpModeRegister implements OpModeRegister {
         //manager.register("K9Line", K9Line.class);
         //manager.register ("PushBotAuto", PushBotAuto.class);
         //manager.register ("PushBotManual", PushBotManual.class);
+        manager.register("Motor Test", MotorTest.class);
         manager.register("Test", SimpleDriver.class);
         manager.register("Test2", SimpleDriver2.class);
         manager.register("Left", SimpleDriverLeft.class);

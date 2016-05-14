@@ -32,8 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.qualcomm.ftcrobotcontroller.opmodes.mentor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorController.RunMode;
 
 /**
@@ -44,110 +42,53 @@ public class MotorTest extends LinearOpMode {
     final static double MOTOR_POWER = 0.15; // Higher values will cause the robot to move faster
     final static double HOLD_IR_SIGNAL_STRENGTH = 0.20; // Higher values will cause the robot to follow closer
 
-    DcMotor motorRight;
-    DcMotor motorLeft;
+    MotorContoller mc;
+    MotorSpeed ms;
 
 
     @Override
     public void runOpMode() throws InterruptedException {
-
+        mc = new MotorContoller(hardwareMap);
+        ms = new MotorSpeed(mc);
 
         telemetry.addData("Mode", "Start Init");
         // set up the hardware devices we are going to use
 
-
-        motorLeft = hardwareMap.dcMotor.get("left");
-        motorRight = hardwareMap.dcMotor.get("right");
-
-        RunMode runMode = RunMode.RUN_USING_ENCODERS;
-        //RunMode runMode = RunMode.RUN_WITHOUT_ENCODERS
-        //Encoders for Motors
-        setDriveMode(runMode);
-
-        motorLeft.setDirection(DcMotor.Direction.REVERSE);
+        mc.setDriveMode(RunMode.RUN_USING_ENCODERS);
+        mc.motorsForward();
         telemetry.addData("Mode", "Finished Init");
         // wait for the start button to be pressed
         waitForStart();
         //powerDrive();
-        driveToPosition(7000);
+        driveToPos(2000);
         telemetry.addData("Mode", "End");
-
+        mc.motorsLeft();
+        driveToPos(4000);
+        while (opModeIsActive()) {
+            mc.setAllMotorSpeed(0);
+            mc.getMotorInfo(telemetry);
+            ms.calSpeed();
+            telemetry.addData("Speed", ms.toString());
+        }
     }
 
-    private void driveToPosition(int i) throws InterruptedException {
-
-        //first distance the robot travels
-        //reset tread distance encoders
-        setDriveMode(RunMode.RESET_ENCODERS);
-
-        // Wait for Encoders to be reset
-        while (motorLeft.getCurrentPosition() != 0 && motorRight.getCurrentPosition() != 0) {
-            waitOneFullHardwareCycle();
-        }
-
-//setting the desired number of counts the motor will travel, setting a target
-        motorLeft.setTargetPosition((int) i);
-        motorRight.setTargetPosition((int) i);
-
+    void driveToPos(int pos) {
+        //setting the desired number of counts the motor will travel, setting a target
+        mc.getLeftMotor().setTargetPosition(pos);
+        mc.getRightMotor().setTargetPosition(pos);
+        mc.getLeftRearMotor().setTargetPosition(pos);
+        mc.getRightRearMotor().setTargetPosition(pos);
         //the motors will go to the target position (above)
-        setDriveMode(RunMode.RUN_TO_POSITION);
-
-        // Don't know if this is necessary
-        waitOneFullHardwareCycle();
+        mc.setDriveMode(RunMode.RUN_TO_POSITION);
 
         //the motors will move at this speed
-        motorLeft.setPower(MOTOR_POWER);
-        motorRight.setPower(MOTOR_POWER);
+        mc.setAllMotorSpeed(MOTOR_POWER);
 
-        while (motorLeft.isBusy() && motorRight.isBusy()) {
-            waitOneFullHardwareCycle();
-            getMotorInfo();
+        while (mc.areMotorsBusy() && opModeIsActive()) {
+            ms.calSpeed();
+            telemetry.addData("Speed", ms.toString());
+            mc.getMotorInfo(telemetry);
         }
     }
 
-    private void powerDrive() throws InterruptedException {
-        motorRight.setPower(MOTOR_POWER);
-        motorLeft.setPower(-MOTOR_POWER);
-
-        // wait for the robot to center on the beacon
-        for (int i = 0; i < 1000; i++) {
-            waitOneFullHardwareCycle();
-            telemetry.addData("Mode", "In Loop");
-            getMotorInfo();
-        }
-        // stop the motors
-        motorRight.setPower(0);
-        motorLeft.setPower(0);
-    }
-
-    private void getMotorInfo() {
-        telemetry.addData("Motor1", motorLeft.getCurrentPosition());
-        telemetry.addData("Motor2", motorRight.getCurrentPosition());
-    }
-
-
-    /**
-     * Sets the drive mode for each motor.
-     * The types of Run Modes are
-     * DcMotorController.RunMode.RESET_ENCODERS
-     * Resets the Encoder Values to 0
-     * DcMotorController.RunMode.RUN_TO_POSITION
-     * Runs until the encoders are equal to the target position
-     * DcMotorController.RunMode.RUN_USING_ENCODERS
-     * Attempts to keep the robot running straight utilizing
-     * the PID the reduces the maximum power by about 15%
-     * DcMotorController.RunMode.RUN_WITHOUT_ENCODERS
-     * Applies the power directly
-     *
-     * @param mode
-     */
-    public void setDriveMode(DcMotorController.RunMode mode) {
-        if (motorLeft.getMode() != mode) {
-            motorLeft.setMode(mode);
-        }
-
-        if (motorRight.getMode() != mode) {
-            motorRight.setMode(mode);
-        }
-    }
 }
