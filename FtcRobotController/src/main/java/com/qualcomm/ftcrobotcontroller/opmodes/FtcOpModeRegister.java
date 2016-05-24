@@ -29,13 +29,12 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.qualcomm.ftcrobotcontroller.opmodes.aburger;
+package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import com.qualcomm.ftcrobotcontroller.opmodes.K9TeleOp;
-import com.qualcomm.ftcrobotcontroller.opmodes.MatrixK9TeleOp;
-import com.qualcomm.ftcrobotcontroller.opmodes.NullOp;
-import com.qualcomm.ftcrobotcontroller.opmodes.PushBotAuto;
-import com.qualcomm.ftcrobotcontroller.opmodes.PushBotManual;
+import com.qualcomm.ftcrobotcontroller.opmodes.mentor.MotorTest;
+import com.qualcomm.ftcrobotcontroller.opmodes.mentor.SimpleDriver;
+import com.qualcomm.ftcrobotcontroller.opmodes.mentor.SimpleDriver2;
+import com.qualcomm.ftcrobotcontroller.opmodes.mentor.SimpleDriverLeft;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -62,15 +61,20 @@ public class FtcOpModeRegister implements OpModeRegister {
 
         manager.register("NullOp", NullOp.class);
 
-        manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
-        manager.register("K9TeleOp", K9TeleOp.class);
-        manager.register("PushBotAuto", PushBotAuto.class);
-        manager.register("PushBotManual", PushBotManual.class);
-        manager.register("AndrewTester", MotorTest.class);
+        //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
+        //manager.register("K9TeleOp", K9TeleOp.class);
+        //manager.register("K9Line", K9Line.class);
+        //manager.register ("PushBotAuto", PushBotAuto.class);
+        //manager.register ("PushBotManual", PushBotManual.class);
+        manager.register("Motor Test", MotorTest.class);
+        manager.register("Test", SimpleDriver.class);
+        manager.register("Test2", SimpleDriver2.class);
+        manager.register("Left", SimpleDriverLeft.class);
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */
+        //manager.register("MR Gyro Test", MRGyroTest.class);
 
         //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
         //manager.register("ColorSensorDriver", ColorSensorDriver.class);
