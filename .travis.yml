@@ -4,3 +4,6 @@ android:
     - build-tools-18.1.1
     - android-18
     - extra
+
+notifications:
+  slack: meisterdevs:mif0ed8xNKNS9LUoHhV7YEui
