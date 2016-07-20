@@ -12,7 +12,6 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 19
-        signingConfig signingConfigs.debug
     }
     compileSdkVersion 19
     buildToolsVersion '21.1.2'
@@ -25,7 +24,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.1.0'
     }
 }
 
