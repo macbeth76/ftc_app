@@ -1,3 +1,8 @@
+| Branch    | Status |
+| --------  | -------- |
+| Master    | [![Build Status](https://travis-ci.org/macbeth76/ftc_app.svg?branch=master)](https://travis-ci.org/macbeth76/ftc_app)   |
+| Develop   | [![Build Status](https://travis-ci.org/macbeth76/ftc_app.svg?branch=develop)](https://travis-ci.org/macbeth76/ftc_app)   |
+
 # ftc_app
 FTC Android Studio project to create FTC Robot Controller app.
 
