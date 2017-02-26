@@ -1,5 +1,6 @@
 | Branch    | Status |
 | --------  | -------- |
+| Codacy    | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6c4a139c76d54eb9b6a058be5f3ab96f)](https://www.codacy.com/app/macbeth76/ftc_app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=macbeth76/ftc_app&amp;utm_campaign=Badge_Grade) |
 | Master    | [![Build Status](https://travis-ci.org/macbeth76/ftc_app.svg?branch=master)](https://travis-ci.org/macbeth76/ftc_app)   |
 | Develop   | [![Build Status](https://travis-ci.org/macbeth76/ftc_app.svg?branch=develop)](https://travis-ci.org/macbeth76/ftc_app)   |
 
