@@ -6,3 +6,4 @@ languages:
 exclude_paths:
 - "FtcRobotController/**"
 - "doc/**"
+- "openCVLibrary310/**"
