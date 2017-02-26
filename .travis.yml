@@ -1,6 +1,14 @@
 language: android
+jdk: oraclejdk8
 android:
   components:
-    - build-tools-18.1.1
-    - android-18
+    - platform-tools
+    - tools
+    - build-tools-23.0.3
+    - android-23
     - extra
+after_failure:
+  - "resultsPath=TeamCode/build/outputs/lint-results-debug.xml"
+  - "[ -f $resultsPath ] && cat $resultsPath"
+notifications:
+  slack: meisterdevs:mif0ed8xNKNS9LUoHhV7YEui
