@@ -1,5 +1,8 @@
 package com.meisterdevs.ftc.mentor;
 
+import com.meisterdevs.ftc.mentor.utils.BNO055IMUHelper;
+import com.meisterdevs.ftc.mentor.utils.I2draw;
+import com.meisterdevs.ftc.mentor.utils.MRIColorBeacon;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -15,9 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
-import org.firstinspires.ftc.teamcode.utils.BNO055IMUHelper;
-import org.firstinspires.ftc.teamcode.utils.I2draw;
-import org.firstinspires.ftc.teamcode.utils.MRIColorBeacon;
+
 
 /**
  * Created by ftc6347 on 8/31/17.

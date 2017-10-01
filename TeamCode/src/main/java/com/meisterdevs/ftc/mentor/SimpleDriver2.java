@@ -1,6 +1,8 @@
 package com.meisterdevs.ftc.mentor;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IrSeekerSensor;
 
@@ -9,6 +11,8 @@ import com.qualcomm.robotcore.hardware.IrSeekerSensor;
  * An example linear op mode where the pushbot
  * will track an IR beacon.
  */
+@TeleOp(name = "SimpleDriver2", group = "Mentor")
+@Disabled
 public class SimpleDriver2 extends LinearOpMode {
     final static double kBaseSpeed = 1;  // Higher values will cause the robot to move faster
 

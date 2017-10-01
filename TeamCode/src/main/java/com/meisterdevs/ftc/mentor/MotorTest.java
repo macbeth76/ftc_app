@@ -31,26 +31,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.meisterdevs.ftc.mentor;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp(name="MotorTest", group="Mentor")
-@Disabled
 /**
- * A simple example of a linear op mode that will approach an IR beacon
+ * A simple example of a linear op mode that will approach an IR beacon.
  */
+@TeleOp(name = "MotorTest", group = "Mentor")
+@Disabled
 public class MotorTest extends LinearOpMode {
-
-    final static double MOTOR_POWER = 0.15; // Higher values will cause the robot to move faster
-    final static double HOLD_IR_SIGNAL_STRENGTH = 0.20; // Higher values will cause the robot to follow closer
-
-    MotorContoller mc;
-    MotorSpeed ms;
-
-
+  
+  private static final double MOTOR_POWER = 0.15;
+  
+    private MotorContoller mc;
+    private MotorSpeed ms;
+  
     @Override
     public void runOpMode() throws InterruptedException {
         mc = new MotorContoller(hardwareMap);
@@ -77,7 +74,7 @@ public class MotorTest extends LinearOpMode {
         }
     }
 
-    void driveToPos(int pos) {
+    private void driveToPos(int pos) {
         //setting the desired number of counts the motor will travel, setting a target
         mc.getLeftMotor().setTargetPosition(pos);
         mc.getRightMotor().setTargetPosition(pos);

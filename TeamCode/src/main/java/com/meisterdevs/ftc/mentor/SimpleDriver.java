@@ -1,7 +1,12 @@
 package com.meisterdevs.ftc.mentor;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
+@TeleOp(name = "SimpleDriver", group = "Mentor")
+@Disabled
 public class SimpleDriver extends LinearOpMode {
     final static double kBaseSpeed = 1;  // Higher values will cause the robot to move faster
 
