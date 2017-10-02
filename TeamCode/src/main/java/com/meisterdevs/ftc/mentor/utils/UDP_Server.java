@@ -1,11 +1,8 @@
 package com.meisterdevs.ftc.mentor.utils;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-
-import org.firstinspires.ftc.robotcontroller.internal.FtcRobotControllerActivity;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

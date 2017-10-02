@@ -1,6 +1,5 @@
 package com.meisterdevs.ftc.mentor;
 
-import com.meisterdevs.ftc.mentor.utils.RabbitMQWrapper;
 import com.meisterdevs.ftc.mentor.utils.UDP_Server;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

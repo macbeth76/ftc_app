@@ -1,7 +1,6 @@
 package com.meisterdevs.ftc.mentor;
 
 import com.meisterdevs.ftc.mentor.utils.RabbitMQWrapper;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
