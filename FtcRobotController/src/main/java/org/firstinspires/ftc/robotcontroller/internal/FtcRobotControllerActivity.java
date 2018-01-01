@@ -61,6 +61,7 @@ import com.google.blocks.ftcrobotcontroller.ProgrammingModeActivity;
 import com.google.blocks.ftcrobotcontroller.ProgrammingModeControllerImpl;
 import com.google.blocks.ftcrobotcontroller.ProgrammingWebHandlers;
 import com.google.blocks.ftcrobotcontroller.runtime.BlocksOpMode;
+import com.meisterdevs.ftc.ContextHolder;
 import com.qualcomm.ftccommon.AboutActivity;
 import com.qualcomm.ftccommon.ClassManagerFactory;
 import com.qualcomm.ftccommon.FtcEventLoop;
@@ -116,11 +117,9 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class FtcRobotControllerActivity extends Activity
   {
   public static final String TAG = "RCActivity";
-  public String getTag() { return TAG; }
-
   private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
   private static final int NUM_GAMEPADS = 2;
-
+      protected final SharedPreferencesListener sharedPreferencesListener = new SharedPreferencesListener();
   protected WifiManager.WifiLock wifiLock;
   protected RobotConfigFileManager cfgFileMgr;
 
@@ -133,8 +132,6 @@ public class FtcRobotControllerActivity extends Activity
   protected StartResult deviceNameManagerStartResult = new StartResult();
   protected StartResult prefRemoterStartResult = new StartResult();
   protected PreferencesHelper preferencesHelper;
-  protected final SharedPreferencesListener sharedPreferencesListener = new SharedPreferencesListener();
-
   protected ImageButton buttonMenu;
   protected TextView textDeviceName;
   protected TextView textNetworkConnectionStatus;
@@ -143,25 +140,13 @@ public class FtcRobotControllerActivity extends Activity
   protected TextView textOpMode;
   protected TextView textErrorMessage;
   protected ImmersiveMode immersion;
-
   protected UpdateUI updateUI;
   protected Dimmer dimmer;
   protected LinearLayout entireScreenLayout;
-
   protected FtcRobotControllerService controllerService;
   protected NetworkType networkType;
-
   protected FtcEventLoop eventLoop;
   protected Queue<UsbDevice> receivedUsbAttachmentNotifications;
-
-  protected class RobotRestarter implements Restarter {
-
-    public void requestRestart() {
-      requestRobotRestart();
-    }
-
-  }
-
   protected ServiceConnection connection = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
@@ -175,6 +160,10 @@ public class FtcRobotControllerActivity extends Activity
       controllerService = null;
     }
   };
+
+      public String getTag() {
+          return TAG;
+      }
 
   @Override
   protected void onNewIntent(Intent intent) {
@@ -296,6 +285,8 @@ public class FtcRobotControllerActivity extends Activity
 
     WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     wifiLock = wifiManager.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "");
+
+      ContextHolder.getInstance().setContext(getApplicationContext());
 
     hittingMenuButtonBrightensScreen();
 
@@ -439,7 +430,6 @@ public class FtcRobotControllerActivity extends Activity
       immersion.cancelSystemUIHide();
     }
   }
-
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -614,6 +604,14 @@ public class FtcRobotControllerActivity extends Activity
       });
     }
   }
+
+      protected class RobotRestarter implements Restarter {
+
+          public void requestRestart() {
+              requestRobotRestart();
+          }
+
+      }
 
   protected class SharedPreferencesListener implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
