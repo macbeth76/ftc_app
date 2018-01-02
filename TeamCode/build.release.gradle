@@ -6,7 +6,7 @@ dependencies {
     compile (name:'Analytics-release', ext:'aar')
     compile (name:'WirelessP2p-release', ext:'aar')
     compile 'com.rabbitmq:amqp-client:4.2.2'
-    //compile 'com.google.code.gson:gson:2.8.2'
+    //not need with android?  compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.couchbase.lite:couchbase-lite-android:1.4.1'
     //compile 'com.couchbase.lite:couchbase-lite-android:2.0.0-DB021'
 
