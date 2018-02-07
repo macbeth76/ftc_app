@@ -10,10 +10,46 @@
 
 
 // Custom definitions may go here
+//apply plugin: 'com.google.protobuf'
+buildscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.4'
+    }
+}
 
 // Include common definitions from above.
 apply from: '../build.common.gradle'
 
 android {
     buildToolsVersion '26.0.2'
+    //defaultConfig {
+    //  multiDexEnabled true
+    //}
+    //dexOptions {
+    //  javaMaxHeapSize "8g"
+    //}
 }
+//protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:3.5.1"
+//    }
+//    plugins {
+//        lite {
+//            artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0"
+//        }
+//    }
+//    generateProtoTasks {
+//        all().each { task ->
+//            task.builtins {
+//                remove java
+//            }
+//            task.plugins {
+//                lite { }
+//            }
+//        }
+//    }
+//}
+

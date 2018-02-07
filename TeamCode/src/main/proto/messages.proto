@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.meisterdev.messages";
+option java_outer_classname = "Message";
+option java_multiple_files = true;
+
+
+message Msg {
+    string mess = 1;
+}
+

@@ -1,6 +1,8 @@
 package com.meisterdevs.ftc.mentor;
 
-import com.meisterdevs.ftc.mentor.utils.UDP_Server;
+import android.util.Log;
+
+import com.meisterdevs.ftc.mentor.utils.UDPServer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,34 +12,39 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "UDPBot", group = "Mentor")
 
 public class UDPBot extends OpMode {
-  
-  UDP_Server udp_server = new UDP_Server();
-  String lastmessage = "";
-  
-  @Override
-  public void init() {
-    udp_server.runUdpServer();
-    
-  
-  
-  }
-  
-  @Override
-  public void loop() {
-    
-    String newmessage = udp_server.getMessage();
-    if (!newmessage.equals(lastmessage))
-    {
-      lastmessage = newmessage;
-      telemetry.addData("lastmessage",newmessage);
+
+    String lastmessage = "";
+    UDPServer udpServer = new UDPServer();
+    Thread thread = new Thread(udpServer);
+    private static String TAG = UDPBot.class.getName();
+
+    @Override
+    public void init() {
+        thread.start();
     }
-    
-    
-  }
-  
-  @Override
-  public void stop() {
-    udp_server.stop_UDP_Server();
-    super.stop();
-  }
+
+    @Override
+    public void loop() {
+
+        byte[] buffer = udpServer.getMessagePoll();
+        if (buffer != null) {
+            String message = new String(buffer);
+            Log.d(TAG,"Message is " + message);
+            String newmessage = new String(buffer);
+
+            if (!newmessage.equals(lastmessage)) {
+                lastmessage = newmessage;
+                telemetry.addData("lastmessage", newmessage);
+                telemetry.update();
+            }
+        }
+
+
+    }
+
+    @Override
+    public void stop() {
+        udpServer.stop();
+        super.stop();
+    }
 }
