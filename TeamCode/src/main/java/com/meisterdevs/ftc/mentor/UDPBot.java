@@ -22,6 +22,7 @@ public class UDPBot extends OpMode {
 
     @Override
     public void init() {
+        udpServer.initUDPServer();
         thread = new Thread(udpServer);
         thread.start();
         telemetry.addData(">", "Stating Server");
@@ -69,8 +70,8 @@ public class UDPBot extends OpMode {
 
     @Override
     public void stop() {
-        udpServer.stop();
-        thread.interrupt();
+        Log.i(TAG, "Stop bot called");
+        udpServer.stopUDPServer();
         super.stop();
     }
 }
