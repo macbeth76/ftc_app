@@ -4,6 +4,8 @@ import android.util.Log;
 
 //import com.meisterdev.messages.Msg;
 
+import com.meisterdev.messages.Msg;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -31,18 +33,20 @@ public class UDPServer implements Runnable {
 
             while (Server_aktiv) {
                 byte[] buffer = new byte[65507];
-                DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
-                ds.receive(dp);
-                //Msg msg = Msg.parseFrom(buffer);
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                ds.receive(packet);
                 //String message = new String(buffer, 0, dp.getLength());
-                //Log.d(TAG,"received message " + msg.getMess());
-                this.messageQueue.put(dp.getData());
+                byte[] bytes = new byte[packet.getLength()];
+                for (int i = 0; i < packet.getLength(); i++) {
+                    bytes[i] = buffer[i];
+                }
+                this.messageQueue.put(bytes);
                 Log.d(TAG,"message count" + messageQueue.size());
 
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(TAG,e.getMessage());
+            Log.e(TAG,e.getMessage(),e);
         } finally {
             if (ds != null) {
                 ds.close();
