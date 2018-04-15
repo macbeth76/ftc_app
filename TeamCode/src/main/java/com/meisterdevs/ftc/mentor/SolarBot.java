@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.meisterdevs.ftc.mentor;
 
 import com.meisterdevs.ftc.mentor.Hardware.HardwareSolarBot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -41,6 +42,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  **/
 
 @TeleOp(name="SolarBot: Teleop Tank", group="SolarBot")
+@Disabled
 public class SolarBot extends OpMode{
 
     /* Declare OpMode members. */
